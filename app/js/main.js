@@ -27,13 +27,13 @@ Highcharts.setOptions({
     }
 });
 
-let chartId = document.getElementById("chart-container");
+let chartIdDividends = document.getElementById("chart-container-spx-dividends");
 
 // checks for the chart ID and displays a backup image if the browser can't find it
 setTimeout(function() {
-    if(chartId.innerHTML === "") {
+    if(chartIdDividends.innerHTML === "") {
         // console.log('noId');
-        let chartArea = document.getElementsByClassName("chart-area");
+        let chartArea = document.getElementsByClassName("chart-area-spx-dividends");
         for(var i = 0; i < chartArea.length; i++) {
             chartArea[i].style.display = "none";
         } 
@@ -45,24 +45,26 @@ setTimeout(function() {
 },500);
 
 function drawHighcharts() {
-    Highcharts.chart(chartId, {
+    Highcharts.chart(chartIdDividends, {
         chart: {
-            type: 'bar',
+            type: 'line',
             styledMode: true,
             spacingBottom: 25,
-            spacingRight: 100
+            spacingRight: 100,
+            spacingLeft: 3
         }, 
         title: {
             text: null
         },
         data: {
-            googleSpreadsheetKey: '1YOKb5l2VM4aAB2r20N_1aT_1vEajYrP3U-U3A6lZbC0'
+            googleSpreadsheetKey: '1xasSo5PIoM2gBHcBunoM-MACjHclmCSkA4UbKU6gvDQ'
         },
         // for bar charts only
         plotOptions: {
             series: {
-                groupPadding: 0.1
-            } 
+                groupPadding: 0.1,
+                clip: false
+            } ,
         },
         // for line charts only
         // plotOptions: {
@@ -82,11 +84,11 @@ function drawHighcharts() {
         //     }
         // },
         legend: {
-            align: 'right',
+            align: 'left',
             symbolRadius: 0,
-            verticalAlign: 'top',
-            x: 10,
-            itemMarginTop: -10
+            verticalAlign: 'float',
+            x: 50,
+            y: 5
         },
         xAxis: {
             labels: {
@@ -101,14 +103,18 @@ function drawHighcharts() {
             labels: {
                 useHTML: true,
                 overflow: 'allow'
-            }
+            },
+            max: 250
         },
         credits: {
             enabled: false
         },
         tooltip: {
             shadow: false,
-            padding: 10
+            padding: 10,
+            valueDecimals: 1,
+            valueSuffix: '%',
+            shared: true
         },
         responsive: {
             rules: [{
